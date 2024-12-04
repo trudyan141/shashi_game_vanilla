@@ -6,7 +6,67 @@ function getTelegramUserId() {
     return 1000000000;
   }
 }
+function loadBecScript(env) {
+  if (!env) {
+    const urlParams = new URLSearchParams(window.location.search);
+    env = urlParams.get('env') || 'prod';
+  }
+  
 
+  const existingScript = document.querySelector('#bec-script');
+  if (existingScript) {
+    document.body.removeChild(existingScript);
+  }
+
+  // Tạo script mới
+  const script = document.createElement('script');
+  script.id = 'becScript';
+  script.src = env === 'dev' 
+    ? "https://tma-demo.dmtp.tech/sdk/0.0.8/bec.js?walletAddress=QnLOYksIDhA3MfBLoRL%2ByIa8jRggeovB3NtN3d7LD7g%3D"
+    : "https://bec.dmtp.tech/0.0.8/bec.js?walletAddress=QnLOYksIDhA3MfBLoRL%2ByIa8jRggeovB3NtN3d7LD7g%3D";
+  script.async = true;
+
+  script.onload = () => {
+    console.log("Bec script loaded successfully!");
+    if (typeof TE !== 'undefined' && typeof TE.onLoad === 'function') {
+      TE.onLoad();
+    } else {
+      console.warn("TE.onLoad function not available");
+    }
+  };
+
+  script.onerror = () => {
+    console.error("Failed to load Bec script");
+  };
+
+  document.body.appendChild(script);
+
+  // custom offer wall
+  document.addEventListener('becLoaded', function (event) {
+    if (typeof TE !== 'undefined' && TE.configureOfferWallStyle) {
+        TE.configureOfferWallStyle({
+        topBar: {
+            backgroundColor: '#2c3e50',
+            textColor: '#ecf0f1'
+        },
+        content: {
+            backgroundColor: '#34495e',
+            appNameColor: '#ecf0f1',
+            appDescriptionColor: '#bdc3c7'
+        },
+        button: {
+            backgroundColor: '#3498db',
+            textColor: '#ffffff',
+            highlightedBackgroundColor: '#2980b9',
+            highlightedTextColor: '#ffffff',
+            outlineColor: '#3498db'
+        }
+    });
+    } else {
+        console.warn('TE is not defined or configureOfferWallStyle is missing.');
+    }
+  });
+}
 // DOM utilities
 function createElement(tag, attributes = {}, ...children) {
   const element = document.createElement(tag);
@@ -340,11 +400,6 @@ const onQuit = () => {
 
   document.body.appendChild(menu);
 };
-  if (TE && typeof TE.onLoad === 'function') {
-      TE.onLoad()
-  } else {
-      console.error('onLoad is not a function');
-  }
-
+  loadBecScript();
   renderMainMenu();
 })();

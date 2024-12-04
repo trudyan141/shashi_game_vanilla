@@ -7,19 +7,18 @@ function getTelegramUserId() {
     return 1000000000;
   }
 }
+
 function loadBecScript(env) {
   if (!env) {
     const urlParams = new URLSearchParams(window.location.search);
     env = urlParams.get('env') || 'prod';
   }
-  
 
   const existingScript = document.querySelector('#bec-script');
   if (existingScript) {
     document.body.removeChild(existingScript);
   }
 
-  // Tạo script mới
   const script = document.createElement('script');
   script.id = 'becScript';
   script.src = env === 'dev' 
@@ -42,32 +41,32 @@ function loadBecScript(env) {
 
   document.body.appendChild(script);
 
-  // custom offer wall
   document.addEventListener('becLoaded', function (event) {
     if (typeof TE !== 'undefined' && TE.configureOfferWallStyle) {
-        TE.configureOfferWallStyle({
+      TE.configureOfferWallStyle({
         topBar: {
-            backgroundColor: '#2c3e50',
-            textColor: '#ecf0f1'
+          backgroundColor: '#2c3e50',
+          textColor: '#ecf0f1'
         },
         content: {
-            backgroundColor: '#34495e',
-            appNameColor: '#ecf0f1',
-            appDescriptionColor: '#bdc3c7'
+          backgroundColor: '#34495e',
+          appNameColor: '#ecf0f1',
+          appDescriptionColor: '#bdc3c7'
         },
         button: {
-            backgroundColor: '#3498db',
-            textColor: '#ffffff',
-            highlightedBackgroundColor: '#2980b9',
-            highlightedTextColor: '#ffffff',
-            outlineColor: '#3498db'
+          backgroundColor: '#3498db',
+          textColor: '#ffffff',
+          highlightedBackgroundColor: '#2980b9',
+          highlightedTextColor: '#ffffff',
+          outlineColor: '#3498db'
         }
-    });
+      });
     } else {
-        console.warn('TE is not defined or configureOfferWallStyle is missing.');
+      console.warn('TE is not defined or configureOfferWallStyle is missing.');
     }
   });
 }
+
 class Game {
   constructor(config) {
     this.config = config;
@@ -81,15 +80,14 @@ class Game {
     this.role = null;
     this.moveInterval = null;
 
-    // Initialize the game
     this.init();
   }
 
-  init() {
-    // Set document title
+  async init() {
     document.title = this.config.name;
 
-    // Create game container
+    await this.initializeEnvironment();
+
     this.container = document.getElementById('game-container');
     this.container.style.width = '100%';
     this.container.style.height = '100%';
@@ -97,15 +95,11 @@ class Game {
     this.container.style.backgroundSize = 'cover';
     this.container.style.position = 'relative';
 
-    // Create game elements
     this.createGameTitle();
     this.createScorePanel();
     this.createMainMenu();
     this.createGameObject();
     this.createAboutModal();
-
-    // Initialize environment and role
-    this.initializeEnvironment();
   }
 
   createGameTitle() {
@@ -143,7 +137,6 @@ class Game {
     menu.style.right = '10px';
     menu.style.zIndex = '10';
 
-    // Create menu buttons
     const buttons = {
       start: { text: 'Start New Game', state: 'menu', handler: () => this.startGame() },
       pause: { text: 'Pause', state: 'playing', handler: () => this.pauseGame() },
@@ -229,7 +222,6 @@ class Game {
     this.environment = urlParams.get('env') || 'prod';
     this.role = urlParams.get('role');
 
-    // Initialize TMA
     if (window.TE && typeof window.TE.onLoad === 'function') {
       window.TE.onLoad();
     }
@@ -477,8 +469,8 @@ function getGameType() {
 
 const gameType = getGameType();
 const gameConfig = games[gameType] || games.cosmicClicker;
-loadBecScript();
-// Initialize the game when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+
+document.addEventListener('DOMContentLoaded', async () => {
+  loadBecScript();
   new Game(gameConfig);
 });

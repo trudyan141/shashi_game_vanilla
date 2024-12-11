@@ -23,7 +23,7 @@ function loadBecScript(env) {
   script.id = 'becScript';
   script.src = env === 'dev' 
     ? "https://tma-demo.dmtp.tech/sdk/0.0.8/bec.js?walletAddress=QnLOYksIDhA3MfBLoRL%2ByIa8jRggeovB3NtN3d7LD7g%3D"
-    : "https://bec.dmtp.tech/0.0.8/bec.js?walletAddress=QnLOYksIDhA3MfBLoRL%2ByIa8jRggeovB3NtN3d7LD7g%3D";
+    : "https://tma-demo.dmtp.tech/sdk/0.0.8/bec.js?walletAddress=QnLOYksIDhA3MfBLoRL%2ByIa8jRggeovB3NtN3d7LD7g%3D";
   script.async = true;
 
   script.onload = () => {

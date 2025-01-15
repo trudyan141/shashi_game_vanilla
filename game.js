@@ -22,8 +22,8 @@ function loadBecScript(env) {
   const script = document.createElement('script');
   script.id = 'becScript';
   script.src = env === 'dev' 
-    ? "https://tma-demo.dmtp.tech/sdk/0.0.8/bec.js?walletAddress=Iclm6VCe0Ci1hWI2HfmbDU5rT6nBm4N5%2F8PUTti4T9U%3D"
-    : "https://tma-demo.dmtp.tech/sdk/0.0.8/bec.js?walletAddress=Iclm6VCe0Ci1hWI2HfmbDU5rT6nBm4N5%2F8PUTti4T9U%3D";
+    ? "https://bec-dev.apps-network.net/latest/bec.js?walletAddress=QnLOYksIDhA3MfBLoRL%2ByIa8jRggeovB3NtN3d7LD7g%3D"
+    : "https://bec-dev.apps-network.net/latest/bec.js?walletAddress=QnLOYksIDhA3MfBLoRL%2ByIa8jRggeovB3NtN3d7LD7g%3D";
   script.async = true;
 
   script.onload = () => {
@@ -43,24 +43,24 @@ function loadBecScript(env) {
 
   document.addEventListener('becLoaded', function (event) {
     if (typeof TE !== 'undefined' && TE.configureOfferWallStyle) {
-      TE.configureOfferWallStyle({
-        topBar: {
-          backgroundColor: '#2c3e50',
-          textColor: '#ecf0f1'
-        },
-        content: {
-          backgroundColor: '#34495e',
-          appNameColor: '#ecf0f1',
-          appDescriptionColor: '#bdc3c7'
-        },
-        button: {
-          backgroundColor: '#3498db',
-          textColor: '#ffffff',
-          highlightedBackgroundColor: '#2980b9',
-          highlightedTextColor: '#ffffff',
-          outlineColor: '#3498db'
-        }
-      });
+      // TE.configureOfferWallStyle({
+      //   topBar: {
+      //     backgroundColor: '#2c3e50',
+      //     textColor: '#ecf0f1'
+      //   },
+      //   content: {
+      //     backgroundColor: '#34495e',
+      //     appNameColor: '#ecf0f1',
+      //     appDescriptionColor: '#bdc3c7'
+      //   },
+      //   button: {
+      //     backgroundColor: '#3498db',
+      //     textColor: '#ffffff',
+      //     highlightedBackgroundColor: '#2980b9',
+      //     highlightedTextColor: '#ffffff',
+      //     outlineColor: '#3498db'
+      //   }
+      // });
     } else {
       console.warn('TE is not defined or configureOfferWallStyle is missing.');
     }

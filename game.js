@@ -22,9 +22,8 @@ function loadBecScript(env) {
   const script = document.createElement('script');
   script.id = 'becScript';
   script.src = env === 'dev' 
-    ? "https://bec-dev.apps-network.net/latest/bec.js?walletAddress=QnLOYksIDhA3MfBLoRL%2ByIa8jRggeovB3NtN3d7LD7g%3D"
-    : "https://bec-dev.apps-network.net/latest/bec.js?walletAddress=QnLOYksIDhA3MfBLoRL%2ByIa8jRggeovB3NtN3d7LD7g%3D";
-  script.async = true;
+    ? "https://bec-dev.apps-network.net/latest/bec.js?walletAddress=Iclm6VCe0Ci1hWI2HfmbDU5rT6nBm4N5%2F8PUTti4T9U%3D&task_id=66b74341e7b2219c58656e2a&task_title=DMTP test change name"
+    : "https://bec-dev.apps-network.net/latest/bec.js?walletAddress=Iclm6VCe0Ci1hWI2HfmbDU5rT6nBm4N5%2F8PUTti4T9U%3D&task_id=66b74341e7b2219c58656e2a&task_title=DMTP test change name"
 
   script.onload = () => {
     console.log("Bec script loaded successfully!");
